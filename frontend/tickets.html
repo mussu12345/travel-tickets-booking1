@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Tickets - TRAVEL</title>
+
+  <!-- ✅ Stylesheets -->
+  <link rel="stylesheet" href="asserts/css/style.css" />
+  <link rel="stylesheet" href="asserts/css/tickets.css" />
+</head>
+<body>
+  <!-- ✅ Header -->
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="asserts/img/logo3.png" alt="TRAVAL Logo">
+        <h2>TRAVEL</h2>
+      </div>
+      <nav class="navbar">
+        <ul>
+          <li><a href="home.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="travel.html">Travel</a></li>
+          <li><a href="tickets.html">Tickets</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ✅ Hero Section -->
+  <section class="tickets-hero">
+    <div class="hero-content">
+      <h1>Book Your Next Adventure ✈️</h1>
+      <p>Plan your dream journey with ease and excitement. Let’s explore the world together!</p>
+    </div>
+  </section>
+
+  <!-- ✅ Booking Form Section -->
+  <section class="booking-section">
+    <div class="booking-card">
+      <h2>🎟️ Ticket Booking Form</h2>
+      <form id="bookingForm">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+
+        <!-- Dropdown destination -->
+        <select name="destination" required>
+          <option value="">Select Destination</option>
+          <option value="Paris">Paris</option>
+          <option value="Bali">Bali</option>
+          <option value="Dubai">Dubai</option>
+          <option value="New York">New York</option>
+          <option value="Tokyo">Tokyo</option>
+          <option value="London">London</option>
+        </select>
+
+        <!-- Date -->
+        <input type="date" name="date" required />
+
+        <!-- Ticket count -->
+        <select name="tickets" required>
+          <option value="">Number of Tickets</option>
+          <option value="1">1 Ticket</option>
+          <option value="2">2 Tickets</option>
+          <option value="3">3 Tickets</option>
+          <option value="4">4 Tickets</option>
+          <option value="5">5 Tickets</option>
+        </select>
+
+        <button type="submit">Book Now</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ✅ Confirmation Section -->
+  <section id="confirmation" class="confirmation">
+    <h2>🎉 Booking Confirmed!</h2>
+    <p>Your booking has been successfully stored. A confirmation email will be sent shortly.</p>
+    <a href="travel.html" class="btn">Explore More</a>
+  </section>
+<script>
+  document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = Object.fromEntries(new FormData(e.target).entries());
+
+    const res = await fetch("http://localhost:5000/api/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("🎉 Booking successful! Data saved to MongoDB Atlas.");
+      e.target.reset();
+    } else {
+      alert("❌ " + data.message);
+    }
+  });
+</script>
+
+
+
+  <!-- ✅ Footer -->
+ <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>About TRAVEL</h3>
+        <p>Discover the world with TRAVEL. We bring you the best destinations, travel tips, and unforgettable experiences.</p>
+      </div>
+
+      <div class="footer-links">
+        <h3>More Info</h3>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Help Center</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p>Email: info@traval.com</p>
+        <p>Phone: +91 98765 43210</p>
+      </div>
+    </div>
+
+    <p class="footer-bottom">© 2025 TRAVEL. All rights reserved.</p>
+  </footer>
+ 
+</body>
+</html>
